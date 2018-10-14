@@ -4,16 +4,17 @@
 #
 Name     : perl-MARC-Record
 Version  : 2.0.7
-Release  : 1
+Release  : 2
 URL      : https://cpan.metacpan.org/authors/id/G/GM/GMCHARLT/MARC-Record-2.0.7.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/G/GM/GMCHARLT/MARC-Record-2.0.7.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libm/libmarc-record-perl/libmarc-record-perl_2.0.7-1.debian.tar.xz
 Summary  : 'Perl extension for handling MARC records'
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
-Requires: perl-MARC-Record-bin
-Requires: perl-MARC-Record-license
-Requires: perl-MARC-Record-man
+Requires: perl-MARC-Record-bin = %{version}-%{release}
+Requires: perl-MARC-Record-license = %{version}-%{release}
+Requires: perl-MARC-Record-man = %{version}-%{release}
+BuildRequires : buildreq-cpan
 
 %description
 MARC::Record and its family
@@ -25,11 +26,21 @@ abstraction of MARC record handling.  The files are:
 %package bin
 Summary: bin components for the perl-MARC-Record package.
 Group: Binaries
-Requires: perl-MARC-Record-license
-Requires: perl-MARC-Record-man
+Requires: perl-MARC-Record-license = %{version}-%{release}
+Requires: perl-MARC-Record-man = %{version}-%{release}
 
 %description bin
 bin components for the perl-MARC-Record package.
+
+
+%package dev
+Summary: dev components for the perl-MARC-Record package.
+Group: Development
+Requires: perl-MARC-Record-bin = %{version}-%{release}
+Provides: perl-MARC-Record-devel = %{version}-%{release}
+
+%description dev
+dev components for the perl-MARC-Record package.
 
 
 %package license
@@ -49,10 +60,10 @@ man components for the perl-MARC-Record package.
 
 
 %prep
-tar -xf %{SOURCE1}
-cd ..
 %setup -q -n MARC-Record-2.0.7
-mkdir -p %{_topdir}/BUILD/MARC-Record-2.0.7/deblicense/
+cd ..
+%setup -q -T -D -n MARC-Record-2.0.7 -b 1
+mkdir -p deblicense/
 mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/MARC-Record-2.0.7/deblicense/
 
 %build
@@ -77,12 +88,12 @@ make TEST_VERBOSE=1 test
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/perl-MARC-Record
-cp deblicense/copyright %{buildroot}/usr/share/doc/perl-MARC-Record/deblicense_copyright
+mkdir -p %{buildroot}/usr/share/package-licenses/perl-MARC-Record
+cp deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-MARC-Record/deblicense_copyright
 if test -f Makefile.PL; then
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
-./Build install --installdirs=site --destdir=%{buildroot}
+./Build install --installdirs=vendor --destdir=%{buildroot}
 fi
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
@@ -91,26 +102,21 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/site_perl/5.26.1/MARC/Batch.pm
-/usr/lib/perl5/site_perl/5.26.1/MARC/Doc/Tutorial.pod
-/usr/lib/perl5/site_perl/5.26.1/MARC/Field.pm
-/usr/lib/perl5/site_perl/5.26.1/MARC/File.pm
-/usr/lib/perl5/site_perl/5.26.1/MARC/File/Encode.pm
-/usr/lib/perl5/site_perl/5.26.1/MARC/File/MicroLIF.pm
-/usr/lib/perl5/site_perl/5.26.1/MARC/File/USMARC.pm
-/usr/lib/perl5/site_perl/5.26.1/MARC/Record.pm
+/usr/lib/perl5/vendor_perl/5.26.1/MARC/Batch.pm
+/usr/lib/perl5/vendor_perl/5.26.1/MARC/Doc/Tutorial.pod
+/usr/lib/perl5/vendor_perl/5.26.1/MARC/Field.pm
+/usr/lib/perl5/vendor_perl/5.26.1/MARC/File.pm
+/usr/lib/perl5/vendor_perl/5.26.1/MARC/File/Encode.pm
+/usr/lib/perl5/vendor_perl/5.26.1/MARC/File/MicroLIF.pm
+/usr/lib/perl5/vendor_perl/5.26.1/MARC/File/USMARC.pm
+/usr/lib/perl5/vendor_perl/5.26.1/MARC/Record.pm
 
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/marcdump
 
-%files license
+%files dev
 %defattr(-,root,root,-)
-/usr/share/doc/perl-MARC-Record/deblicense_copyright
-
-%files man
-%defattr(-,root,root,-)
-/usr/share/man/man1/marcdump.1
 /usr/share/man/man3/MARC::Batch.3
 /usr/share/man/man3/MARC::Doc::Tutorial.3
 /usr/share/man/man3/MARC::Field.3
@@ -119,3 +125,11 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 /usr/share/man/man3/MARC::File::MicroLIF.3
 /usr/share/man/man3/MARC::File::USMARC.3
 /usr/share/man/man3/MARC::Record.3
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/perl-MARC-Record/deblicense_copyright
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/marcdump.1
