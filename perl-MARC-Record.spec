@@ -102,14 +102,14 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.28.1MARC/Batch.pm
-/usr/lib/perl5/vendor_perl/5.28.1MARC/Doc/Tutorial.pod
-/usr/lib/perl5/vendor_perl/5.28.1MARC/Field.pm
-/usr/lib/perl5/vendor_perl/5.28.1MARC/File.pm
-/usr/lib/perl5/vendor_perl/5.28.1MARC/File/Encode.pm
-/usr/lib/perl5/vendor_perl/5.28.1MARC/File/MicroLIF.pm
-/usr/lib/perl5/vendor_perl/5.28.1MARC/File/USMARC.pm
-/usr/lib/perl5/vendor_perl/5.28.1MARC/Record.pm
+/usr/lib/perl5/vendor_perl/5.28.1/MARC/Batch.pm
+/usr/lib/perl5/vendor_perl/5.28.1/MARC/Doc/Tutorial.pod
+/usr/lib/perl5/vendor_perl/5.28.1/MARC/Field.pm
+/usr/lib/perl5/vendor_perl/5.28.1/MARC/File.pm
+/usr/lib/perl5/vendor_perl/5.28.1/MARC/File/Encode.pm
+/usr/lib/perl5/vendor_perl/5.28.1/MARC/File/MicroLIF.pm
+/usr/lib/perl5/vendor_perl/5.28.1/MARC/File/USMARC.pm
+/usr/lib/perl5/vendor_perl/5.28.1/MARC/Record.pm
 
 %files bin
 %defattr(-,root,root,-)
