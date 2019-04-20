@@ -4,11 +4,11 @@
 #
 Name     : perl-MARC-Record
 Version  : 2.0.7
-Release  : 10
+Release  : 11
 URL      : https://cpan.metacpan.org/authors/id/G/GM/GMCHARLT/MARC-Record-2.0.7.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/G/GM/GMCHARLT/MARC-Record-2.0.7.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libm/libmarc-record-perl/libmarc-record-perl_2.0.7-1.debian.tar.xz
-Summary  : 'Perl extension for handling MARC records'
+Summary  : Perl/CPAN Module MARC::Record: Perl extension for handling MARC records
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
 Requires: perl-MARC-Record-bin = %{version}-%{release}
@@ -27,7 +27,6 @@ abstraction of MARC record handling.  The files are:
 Summary: bin components for the perl-MARC-Record package.
 Group: Binaries
 Requires: perl-MARC-Record-license = %{version}-%{release}
-Requires: perl-MARC-Record-man = %{version}-%{release}
 
 %description bin
 bin components for the perl-MARC-Record package.
@@ -38,6 +37,7 @@ Summary: dev components for the perl-MARC-Record package.
 Group: Development
 Requires: perl-MARC-Record-bin = %{version}-%{release}
 Provides: perl-MARC-Record-devel = %{version}-%{release}
+Requires: perl-MARC-Record = %{version}-%{release}
 
 %description dev
 dev components for the perl-MARC-Record package.
@@ -64,7 +64,7 @@ man components for the perl-MARC-Record package.
 cd ..
 %setup -q -T -D -n MARC-Record-2.0.7 -b 1
 mkdir -p deblicense/
-mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/MARC-Record-2.0.7/deblicense/
+cp -r %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/MARC-Record-2.0.7/deblicense/
 
 %build
 export http_proxy=http://127.0.0.1:9/
