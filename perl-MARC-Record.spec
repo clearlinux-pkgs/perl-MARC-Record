@@ -4,16 +4,17 @@
 #
 Name     : perl-MARC-Record
 Version  : 2.0.7
-Release  : 11
+Release  : 12
 URL      : https://cpan.metacpan.org/authors/id/G/GM/GMCHARLT/MARC-Record-2.0.7.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/G/GM/GMCHARLT/MARC-Record-2.0.7.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libm/libmarc-record-perl/libmarc-record-perl_2.0.7-1.debian.tar.xz
-Summary  : Perl/CPAN Module MARC::Record: Perl extension for handling MARC records
+Summary  : 'Perl extension for handling MARC records'
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
 Requires: perl-MARC-Record-bin = %{version}-%{release}
 Requires: perl-MARC-Record-license = %{version}-%{release}
 Requires: perl-MARC-Record-man = %{version}-%{release}
+Requires: perl-MARC-Record-perl = %{version}-%{release}
 BuildRequires : buildreq-cpan
 
 %description
@@ -59,18 +60,28 @@ Group: Default
 man components for the perl-MARC-Record package.
 
 
+%package perl
+Summary: perl components for the perl-MARC-Record package.
+Group: Default
+Requires: perl-MARC-Record = %{version}-%{release}
+
+%description perl
+perl components for the perl-MARC-Record package.
+
+
 %prep
 %setup -q -n MARC-Record-2.0.7
-cd ..
-%setup -q -T -D -n MARC-Record-2.0.7 -b 1
+cd %{_builddir}
+tar xf %{_sourcedir}/libmarc-record-perl_2.0.7-1.debian.tar.xz
+cd %{_builddir}/MARC-Record-2.0.7
 mkdir -p deblicense/
-cp -r %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/MARC-Record-2.0.7/deblicense/
+cp -r %{_builddir}/debian/* %{_builddir}/MARC-Record-2.0.7/deblicense/
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
+export LANG=C.UTF-8
 if test -f Makefile.PL; then
 %{__perl} Makefile.PL
 make  %{?_smp_mflags}
@@ -80,7 +91,7 @@ else
 fi
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -89,7 +100,7 @@ make TEST_VERBOSE=1 test
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/perl-MARC-Record
-cp deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-MARC-Record/deblicense_copyright
+cp %{_builddir}/MARC-Record-2.0.7/deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-MARC-Record/617fab92bc74598978e3a98e904d180db9a74c60
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -102,14 +113,6 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.28.2/MARC/Batch.pm
-/usr/lib/perl5/vendor_perl/5.28.2/MARC/Doc/Tutorial.pod
-/usr/lib/perl5/vendor_perl/5.28.2/MARC/Field.pm
-/usr/lib/perl5/vendor_perl/5.28.2/MARC/File.pm
-/usr/lib/perl5/vendor_perl/5.28.2/MARC/File/Encode.pm
-/usr/lib/perl5/vendor_perl/5.28.2/MARC/File/MicroLIF.pm
-/usr/lib/perl5/vendor_perl/5.28.2/MARC/File/USMARC.pm
-/usr/lib/perl5/vendor_perl/5.28.2/MARC/Record.pm
 
 %files bin
 %defattr(-,root,root,-)
@@ -128,8 +131,19 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/perl-MARC-Record/deblicense_copyright
+/usr/share/package-licenses/perl-MARC-Record/617fab92bc74598978e3a98e904d180db9a74c60
 
 %files man
 %defattr(0644,root,root,0755)
 /usr/share/man/man1/marcdump.1
+
+%files perl
+%defattr(-,root,root,-)
+/usr/lib/perl5/vendor_perl/5.30.1/MARC/Batch.pm
+/usr/lib/perl5/vendor_perl/5.30.1/MARC/Doc/Tutorial.pod
+/usr/lib/perl5/vendor_perl/5.30.1/MARC/Field.pm
+/usr/lib/perl5/vendor_perl/5.30.1/MARC/File.pm
+/usr/lib/perl5/vendor_perl/5.30.1/MARC/File/Encode.pm
+/usr/lib/perl5/vendor_perl/5.30.1/MARC/File/MicroLIF.pm
+/usr/lib/perl5/vendor_perl/5.30.1/MARC/File/USMARC.pm
+/usr/lib/perl5/vendor_perl/5.30.1/MARC/Record.pm
