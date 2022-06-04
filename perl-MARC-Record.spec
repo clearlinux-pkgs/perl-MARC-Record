@@ -4,7 +4,7 @@
 #
 Name     : perl-MARC-Record
 Version  : 2.0.7
-Release  : 16
+Release  : 17
 URL      : https://cpan.metacpan.org/authors/id/G/GM/GMCHARLT/MARC-Record-2.0.7.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/G/GM/GMCHARLT/MARC-Record-2.0.7.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libm/libmarc-record-perl/libmarc-record-perl_2.0.7-1.debian.tar.xz
@@ -139,11 +139,4 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.34.0/MARC/Batch.pm
-/usr/lib/perl5/vendor_perl/5.34.0/MARC/Doc/Tutorial.pod
-/usr/lib/perl5/vendor_perl/5.34.0/MARC/Field.pm
-/usr/lib/perl5/vendor_perl/5.34.0/MARC/File.pm
-/usr/lib/perl5/vendor_perl/5.34.0/MARC/File/Encode.pm
-/usr/lib/perl5/vendor_perl/5.34.0/MARC/File/MicroLIF.pm
-/usr/lib/perl5/vendor_perl/5.34.0/MARC/File/USMARC.pm
-/usr/lib/perl5/vendor_perl/5.34.0/MARC/Record.pm
+/usr/lib/perl5/*
